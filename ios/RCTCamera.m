@@ -1,9 +1,9 @@
-#import "RCTBridge.h"
+#import <React/RCTBridge.h>
 #import "RCTCamera.h"
 #import "RCTCameraManager.h"
-#import "RCTLog.h"
-#import "RCTUtils.h"
-#import "RCTEventDispatcher.h"
+#import <React/RCTLog.h>
+#import <React/RCTUtils.h>
+#import <React/RCTEventDispatcher.h>
 
 #import "UIView+React.h"
 
@@ -103,10 +103,15 @@
 
 - (void)removeFromSuperview
 {
-  [self.manager stopSession];
-  [super removeFromSuperview];
-  [[NSNotificationCenter defaultCenter] removeObserver:self name:UIDeviceOrientationDidChangeNotification object:nil];
-  [UIApplication sharedApplication].idleTimerDisabled = _previousIdleTimerDisabled;
+    [self.manager stopSession];
+    @try {
+        [super removeFromSuperview];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"%@", exception.reason);
+    }
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIDeviceOrientationDidChangeNotification object:nil];
+    [UIApplication sharedApplication].idleTimerDisabled = _previousIdleTimerDisabled;
 }
 
 - (void)orientationChanged:(NSNotification *)notification{
