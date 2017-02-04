@@ -287,7 +287,7 @@ class RCTCameraViewFinder extends TextureView implements TextureView.SurfaceText
 
         @Override
         protected Void doInBackground(Void... ignored) {
-            if (isCancelled()) {
+            if (isCancelled() || _isStopping) {
                 return null;
             }
 
